@@ -75,3 +75,5 @@ func main() {
 
 	e.Logger.Fatal((e.Start(":8080")))
 }
+
+// Start Jaeger UI : http://localhost:16686
