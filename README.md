@@ -16,7 +16,7 @@
 
 **Trace** – The way Jaeger presents execution requests. A trace is composed of at least one span.
 
-## 2. Download Jaeger Docker and Run
+## 2. Download Jaeger Docker image and Run
 
     docker run -d --name jaeger -p 16686:16686 -p 6831:6831/udp jaegertracing/all-in-one:latest
 
