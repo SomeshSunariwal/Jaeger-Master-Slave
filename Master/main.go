@@ -41,15 +41,16 @@ func main() {
 	defer closer.Close()
 
 	e := echo.New()
-	span := tracer.StartSpan("Say-Hello")
-	span.SetTag("Hello-to", "Somesh")
-	helloStr := fmt.Sprintf("Hello, %s", "Somesh")
+	span := tracer.StartSpan("Service-1")
+	span.SetTag("Tag", "Tag Value")
+	helloStr := fmt.Sprintf("Hello, %s", "Logging")
 	span.LogFields(
 		log.String("event", "string-format"),
 		log.String("value", helloStr),
 	)
 
-	span.LogKV("event", "Println")
+	// Key Value Pair Log
+	// span.LogKV("event", "Println")
 
 	url := "http://localhost:8082/publish"
 	req, _ := http.NewRequest("GET", url, nil)
@@ -64,10 +65,10 @@ func main() {
 		data, _ := ioutil.ReadAll(resp.Body)
 		resp.Body.Close()
 
-		fmt.Println("http.StatusOK", string(data))
+		fmt.Println("Got response from slave", string(data))
 		span.LogFields(
 			log.String("event", "string-format"),
-			log.String("value", "helloStr"),
+			log.String("value", "Log of this span"),
 		)
 		span.Finish()
 		return context.String(http.StatusOK, "Done")

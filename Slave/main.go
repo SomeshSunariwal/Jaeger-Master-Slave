@@ -42,13 +42,13 @@ func main() {
 	e := echo.New()
 	e.GET("/publish", func(context echo.Context) error {
 		spanCtx, _ := tracer.Extract(opentracing.HTTPHeaders, opentracing.HTTPHeadersCarrier(context.Request().Header))
-		serverSpan := tracer.StartSpan("server", ext.RPCServerOption(spanCtx))
+		serverSpan := tracer.StartSpan("Service-2", ext.RPCServerOption(spanCtx))
 		serverSpan.Finish()
 		serverSpan.LogFields(
 			log.String("event", "string-format"),
-			log.String("value", "helloStr"),
+			log.String("value", "Log of this span"),
 		)
-		return context.String(http.StatusOK, "Hello From master")
+		return context.String(http.StatusOK, "Sending Response...")
 	})
 
 	e.Logger.Fatal(e.Start(":8082"))
